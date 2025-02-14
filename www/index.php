@@ -29,6 +29,12 @@ $cards = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <li><a href="#" class="text-gray-300 hover:text-white">Zeldzame Pokémon</a></li>
                 <li><a href="#" class="text-gray-300 hover:text-white">Over Ons</a></li>
                 <li><a href="#" class="text-gray-300 hover:text-white">Contact</a></li>
+                <li><a href="pokemon_create.php" class="text-gray-300 hover:text-white">Maak Kaart</a></li>
+                <?php if (isset($_SESSION['user_id'])) : ?>
+                    <li><a href="logout.php">Uitloggen</a></li>
+                <?php else : ?>
+                    <li><a href="login.php">Inloggen</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
