@@ -56,7 +56,7 @@ $cards = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <?php foreach($cards as $card):?>
                     <!-- Pokemon Card  -->
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png" alt="Pikachu"
+                        <img src="./uploads/<?php echo $card['image']?>" alt=<?php echo $card['name']?>
                             class="w-full h-64 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2"><?php echo $card['name']?></h3>

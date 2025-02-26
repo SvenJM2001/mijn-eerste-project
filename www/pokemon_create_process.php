@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rarity = htmlspecialchars($_POST['rarity']);
     $description = htmlspecialchars($_POST['description']);
     $price = htmlspecialchars($_POST['price']);
- 
+
     // Handle file upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $target_dir = "uploads/";
@@ -26,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Move the file to the target directory
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
                         echo "The file " . htmlspecialchars(basename($_FILES["image"]["name"])) . " has been uploaded.";
+
+                        $image = basename($_FILES["image"]["name"]);
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                     }
@@ -46,10 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // For example:
     // $sql = "INSERT INTO pokemon (name, type, rarity, price, image) VALUES ('$name', '$type', '$rarity', '$price', '$target_file')";
     // Execute the SQL query...
- 
     
- 
-    echo "Pokemon created successfully!";
+    $sql = "INSERT INTO cards (name, type, rarity, description, price, image)
+    VALUES ('$name', '$type', '$rarity', '$description', '$price', '$image')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Nieuwe pokemon succesvol toegevoegd!";
+    } else {
+        echo "Fout: " . $sql . "<br>" . $conn->error;
+    }
+    
 } else {
     echo "Invalid request method.";
 }
