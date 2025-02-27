@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
     echo "You are not logged in, please login. ";
     echo "<a href='login.php'>Login here</a>";
     exit;
@@ -19,6 +19,7 @@ $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 require 'header.php';
+
 ?>
 <main>
     <div class="container">
@@ -30,6 +31,7 @@ require 'header.php';
                     <th>Voornaam</th>
                     <th>Achternaam</th>
                     <th>Email</th>
+                    <th>gebruikersnaam</th>
                     <th>Rol</th>
                     <th>Acties</th>
                 </tr>
@@ -40,11 +42,10 @@ require 'header.php';
                         <td><?php echo $user['firstname'] ?></td>
                         <td><?php echo $user['lastname'] ?></td>
                         <td><?php echo $user['email'] ?></td>
+                        <td><?php echo $user['username']?></td>
                         <td><?php echo $user['role'] ?></td>
                         <td>
                             <a href="users_detail.php?id=<?php echo $user['id'] ?>">Bekijk</a>
-                            
-                      
                             <?php echo "<a href='users_edit.php?id=" . $user['id'] . "'>Wijzig</a>";?>
                             <?php echo "<a href='users_delete.php?id=" . $user['id'] . "'>Verwijder</a>";?>
                         </td>
@@ -54,4 +55,3 @@ require 'header.php';
         </table>
     </div>
 </main>
-<?php require 'footer.php' ?>

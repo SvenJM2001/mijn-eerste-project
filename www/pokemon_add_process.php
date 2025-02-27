@@ -66,8 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Fout: " . $stmt->errorInfo()[2]; // Show the specific error message
     }
-    } else {
-    echo "Invalid request method.";
-    }
-
+    
+    header("Location: login.php");
+    exit();
+} else {
+echo "Invalid request method.";
+}
 ?>
