@@ -25,20 +25,40 @@
         </div>
     </nav>
 
-    <form action="login_process.php" method="post" enctype="multipart/form-data">
+    <form action="register_process.php" method="post" enctype="multipart/form-data">
         <div>
-            <label for="username">Gebruikersnaam:</label>
-            <input type="username" name="username" id="username" required>
+            <label for="firstname">Voornaam:</label>
+            <input type="text" name="firstname" id="firstname" required>
+        </div>
+        <div>
+            <label for="lastname">Achternaam:</label>
+            <input type="text" name="lastname" id="lastname" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
         </div>
         <div>
             <label for="password">Wachtwoord:</label>
             <input type="password" name="password" id="password" required>
         </div>
+        <div>
+            <label for="adress">Adres:</label>
+            <input type="text" name="adress" id="adress">
+        </div>
+        <div>
+            <label for="city">Stad:</label>
+            <input type="text" name="city" id="city">
+        </div>
+        <div>
+            <label for="role">Rol:</label>
+            <select name="role" id="role">
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+        </div>
         <button type="submit">inloggen</button>
     </form>
-        <div>
-            <p>heb je nog geen account? <a href="register.php">Registreer hier</a></p>
-        </div>
     
 </body>
 </html>

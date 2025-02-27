@@ -1,10 +1,30 @@
 <?php
-
+session_start();
 require 'database.php';
 
+if (isset($_SESSION['username'])) {
+    // Haal de rol van de ingelogde gebruiker op
+    $username = $_SESSION['username'];
+    $query = "SELECT role FROM users WHERE username = :username";
+    $stmt = $conn->prepare($query);
+    $stmt->bindvalue(':username', $username, PDO::PARAM_STR);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Als de gebruiker bestaat, haal de rol op
+    if ($row) {
+        $role = $row['role'];
+    } else {
+        $role = '';
+    }
+} else {
+    $role = '';
+}
+
 $sql = "SELECT * FROM cards";
-$result = mysqli_query($conn, $sql);
-$cards = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$cards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -30,11 +50,37 @@ $cards = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <li><a href="#" class="text-gray-300 hover:text-white">Over Ons</a></li>
                 <li><a href="#" class="text-gray-300 hover:text-white">Contact</a></li>
                 <li><a href="pokemon_create.php" class="text-gray-300 hover:text-white">Maak Kaart</a></li>
-                <?php if (isset($_SESSION['user_id'])) : ?>
-                    <li><a href="logout.php">Uitloggen</a></li>
-                <?php else : ?>
-                    <li><a href="login.php">Inloggen</a></li>
-                <?php endif; ?>
+                <li><a class="nav" href="over_ons.php">Over Ons</a></li>
+                    <div class="dropdown">
+                        <button class="dropdown_button">
+                            <?php
+                            if(isset($_SESSION['username'])){
+                            ?>
+                            <a href="#"><?php echo $_SESSION['username'] ?></a>
+                            <?php
+                            } else {
+                            ?>
+                            <a href="login.php">Inloggen</a>
+                            <?php   
+                            }
+                            ?>
+                        </button>
+                        <ul class="dropdown_content">
+                            <li><a href="#">Mijn gegevens</a></li>
+                            <?php
+                            if(isset($_SESSION['username'])){
+                            ?>
+                            <li><a href="logout.php" class="btn btn-danger">Uitloggen</a></li>
+                            <?php
+                            } else {
+                            ?>
+                            <li><button id="login_button" onclick="window.location.href = 'login.php';">Login</button></li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>

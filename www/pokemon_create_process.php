@@ -49,16 +49,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $sql = "INSERT INTO pokemon (name, type, rarity, price, image) VALUES ('$name', '$type', '$rarity', '$price', '$target_file')";
     // Execute the SQL query...
     
-    $sql = "INSERT INTO cards (name, type, rarity, description, price, image)
-    VALUES ('$name', '$type', '$rarity', '$description', '$price', '$image')";
+    $sql = "INSERT INTO cards (name, type, rarity, description, price, image) 
+            VALUES (:name, :type, :rarity, :description, :price, :image)";
 
-    if ($conn->query($sql) === TRUE) {
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':type', $type);
+    $stmt->bindParam(':rarity', $rarity);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':price', $price);
+    $stmt->bindParam(':image', $image);
+
+    // Execute the statement
+    if ($stmt->execute()) {
         echo "Nieuwe pokemon succesvol toegevoegd!";
     } else {
-        echo "Fout: " . $sql . "<br>" . $conn->error;
+        echo "Fout: " . $stmt->errorInfo()[2]; // Show the specific error message
     }
-    
-} else {
+    } else {
     echo "Invalid request method.";
-}
+    }
+
 ?>
