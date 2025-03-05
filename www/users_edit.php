@@ -1,72 +1,85 @@
 <?php
+require 'database.php';
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    echo "You are not logged in, please login. ";
-    echo "<a href='login.php'>Login here</a>";
-    exit;
-}
+// Controleer of er een 'id' parameter in de URL zit
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-if ($_SESSION['role'] != 'admin') {
-    echo "You are not allowed to view this page, please login as admin";
-    exit;
-}
-require 'database.php';
+    // SQL-query om de gegevens van de gebruiker op te halen op basis van de id
+    $sql = "
+        SELECT *
+        FROM users
+        WHERE id = :id;
+    ";
 
-try {
-    // Haal alle gebruikers op uit de database
-    $sql = "SELECT * FROM users";
+    // Prepare en voer de query uit
     $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Haal de resultaten op als een associatieve array
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "Something went wrong: " . $e->getMessage();
-    exit;
+    // Als er geen resultaten zijn, laat een bericht zien
+    if (!$user) {
+        echo "Geen gegevens gevonden voor deze gebruiker.";
+        exit();
+    }
+} else {
+    echo "Geen gebruiker geselecteerd.";
+    exit();
 }
 
-require 'header.php';
+$conn = null;  // Sluit de databaseverbinding
 ?>
-<main>
-    <div class="container">
-        <form action="" method="post"></form>
-        <div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Wijzigen</title>
+</head>
+<body>
+    <?php include 'header.php';?>
+
+    <form action="users_edit_process.php?id=<?php echo $user['id']; ?>" method="post" enctype="multipart/form-data">
+    <div>
             <label for="firstname">Voornaam:</label>
-            <input type="text" name="firstname" id="firstname" required>
+            <input type="text" name="firstname" id="firstname" value="<?php echo htmlspecialchars($user['firstname']); ?>">
         </div>
         <div>
             <label for="lastname">Achternaam:</label>
-            <input type="text" name="lastname" id="lastname" required>
+            <input type="text" name="lastname" id="lastname" value="<?php echo htmlspecialchars($user['lastname']); ?>">
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>">
         </div>
         <div>
             <label for="username">Gebruikersnaam:</label>
-            <input type="text" name="username" id="username" required>
+            <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($user['username']); ?>">
         </div>
         <div>
             <label for="password">Wachtwoord:</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" placeholder="Voer hier een nieuw wachtwoord in (indien gewenst)">
         </div>
         <div>
             <label for="address">Adres:</label>
-            <input type="text" name="address" id="address">
+            <input type="text" name="address" id="address" value="<?php echo htmlspecialchars($user['address']); ?>">
         </div>
         <div>
             <label for="city">Stad:</label>
-            <input type="text" name="city" id="city">
+            <input type="text" name="city" id="city" value="<?php echo htmlspecialchars($user['city']); ?>">
         </div>
         <div>
             <label for="role">Rol:</label>
             <select name="role" id="role">
-                <option value="admin">Admin</option>
-                <option value="user">Gebruiker</option>
+                <option value="admin" <?php echo $user['role'] == 'admin' ? 'selected' : ''; ?>>Admin</option>
+                <option value="user" <?php echo $user['role'] == 'user' ? 'selected' : ''; ?>>Gebruiker</option>
             </select>
         </div>
-    </div>
-</main>
-<?php require 'footer.php' ?>
+        <button type="submit">Bijwerken</button>
+    </form>
+
+</body>
+</html>

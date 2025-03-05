@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
                     // Move the file to the target directory
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                        echo "The file " . htmlspecialchars(basename($_FILES["image"]["name"])) . " has been uploaded.";
 
                         $image = basename($_FILES["image"]["name"]);
                     } else {
@@ -62,13 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the statement
     if ($stmt->execute()) {
-        echo "Nieuwe pokemon succesvol toegevoegd!";
+        header("Location: pokemon_index.php");
+        exit;
     } else {
         echo "Fout: " . $stmt->errorInfo()[2]; // Show the specific error message
     }
-    
-    header("Location: login.php");
-    exit();
 } else {
 echo "Invalid request method.";
 }
