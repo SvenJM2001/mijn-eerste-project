@@ -1,6 +1,11 @@
 <?php
 session_start();
 require 'database.php';
+require 'vendor/autoload.php';
+
+use Carbon\Carbon;
+
+printf("Now: %s", Carbon::now());
 
 // Verkrijg de zoek- en filterwaarden uit de URL
 $search = isset($_GET['search']) ? $_GET['search'] : '';
