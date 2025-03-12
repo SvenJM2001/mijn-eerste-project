@@ -31,7 +31,6 @@ require 'header.php';
                         <h3><?php echo $user['firstname']?> <?php echo $user['lastname']?></h3>
                         <p><?php echo $user['username'] ?></p>
                         <p><?php echo $user['email'] ?></p>
-                        <p><?php echo $user['password'] ?></p>
                         <p><?php echo $user['city'] ?> <?php echo $user['address'] ?></p>
 
                     </div>

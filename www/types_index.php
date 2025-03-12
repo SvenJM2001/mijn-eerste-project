@@ -39,7 +39,7 @@ require 'header.php';
 ?>
 <main>
     <div>
-    <form method="GET" action="pokemon_index.php">
+    <form method="GET" action="types_index.php">
     <div>
         <label for="search">Zoeken op naam:</label>
         <input type="text" name="search" id="search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
