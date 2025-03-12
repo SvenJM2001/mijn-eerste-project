@@ -42,6 +42,13 @@ if (isset($_SESSION['username'])) {
                             <a href="pokemon_add.php">Toevoegen</a>
                         </div>
                     </li>
+                    <li class="dropdown">
+                        <a href="#">Types</a>
+                        <div>
+                            <a href="types_index.php">Bekijken</a>
+                            <a href="types_add.php">Toevoegen</a>
+                        </div>
+                    </li>
                 <?php } ?>
                 <li><a href="#" class="text-gray-300 hover:text-white">Over Ons</a></li>
                 <li><a href="#" class="text-gray-300 hover:text-white">Contact</a></li>
