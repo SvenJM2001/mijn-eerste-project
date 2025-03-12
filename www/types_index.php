@@ -61,8 +61,8 @@ require 'header.php';
                         <td><?php echo $type['name'] ?></td>
                         <td><img src="./uploads/<?php echo $type['image']?>" alt=<?php echo $type['name']?>></td>
                         <td>
-                            <?php echo "<a href='types_edit.php?id=" . $type['type_id'] . "'>Wijzig</a>";?>
-                            <?php echo "<a href='types_delete.php?id=" . $type['type_id'] . "'>Verwijder</a>";?>
+                            <?php echo "<a href='types_edit.php?id=" . $type['id'] . "'>Wijzig</a>";?>
+                            <?php echo "<a href='types_delete.php?id=" . $type['id'] . "'>Verwijder</a>";?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
