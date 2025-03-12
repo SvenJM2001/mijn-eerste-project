@@ -5,7 +5,13 @@ require 'vendor/autoload.php';
 
 use Carbon\Carbon;
 
+// Stel de tijdzone in voor Carbon
+Carbon::setLocale('nl'); // Optioneel: als je de tijd in Nederlands wilt tonen
+date_default_timezone_set('Europe/Amsterdam'); // Stel de tijdzone van PHP in
+
+// Verkrijg de huidige tijd
 printf("Now: %s", Carbon::now());
+
 
 // Verkrijg de zoek- en filterwaarden uit de URL
 $search = isset($_GET['search']) ? $_GET['search'] : '';
