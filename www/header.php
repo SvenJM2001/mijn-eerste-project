@@ -28,6 +28,7 @@ if (isset($_SESSION['username'])) {
                 <li><a href="#" class="text-gray-300 hover:text-white">Mijn Verzameling</a></li>
                 <li><a href="#" class="text-gray-300 hover:text-white">Zeldzame Pokémon</a></li>
                 <?php if ($role === 'admin') { ?>
+                    <!-- Dropdown Gebruikers -->
                     <li class="dropdown">
                         <a href="#">Gebruikers</a>
                         <div class="dropdown-content">
@@ -35,16 +36,20 @@ if (isset($_SESSION['username'])) {
                             <a href="users_add.php">Toevoegen</a>
                         </div>
                     </li>
+
+                    <!-- Dropdown Kaarten -->
                     <li class="dropdown">
                         <a href="#">Kaarten</a>
-                        <div>
+                        <div class="dropdown-content">
                             <a href="pokemon_index.php">Bekijken</a>
                             <a href="pokemon_add.php">Toevoegen</a>
                         </div>
                     </li>
+
+                    <!-- Dropdown Types -->
                     <li class="dropdown">
                         <a href="#">Types</a>
-                        <div>
+                        <div class="dropdown-content">
                             <a href="types_index.php">Bekijken</a>
                             <a href="types_add.php">Toevoegen</a>
                         </div>

@@ -38,6 +38,7 @@ $conn = null;  // Sluit de databaseverbinding
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Wijzigen</title>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
     <?php include 'header.php';?>

@@ -18,40 +18,52 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-require 'header.php';
 
 ?>
-<main>
-    <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Verzameling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+<?php require 'header.php'; ?>
+    <main>
+        <div class="container">
 
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Voornaam</th>
-                    <th>Achternaam</th>
-                    <th>Email</th>
-                    <th>gebruikersnaam</th>
-                    <th>Rol</th>
-                    <th>Acties</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user) : ?>
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo $user['firstname'] ?></td>
-                        <td><?php echo $user['lastname'] ?></td>
-                        <td><?php echo $user['email'] ?></td>
-                        <td><?php echo $user['username']?></td>
-                        <td><?php echo $user['role'] ?></td>
-                        <td>
-                            <a href="users_detail.php?id=<?php echo $user['id'] ?>">Bekijk</a>
-                            <?php echo "<a href='users_edit.php?id=" . $user['id'] . "'>Wijzig</a>";?>
-                            <?php echo "<a href='users_delete.php?id=" . $user['id'] . "'>Verwijder</a>";?>
-                        </td>
+                        <th>Voornaam</th>
+                        <th>Achternaam</th>
+                        <th>Email</th>
+                        <th>gebruikersnaam</th>
+                        <th>Rol</th>
+                        <th>Acties</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</main>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $user) : ?>
+                        <tr>
+                            <td><?php echo $user['firstname'] ?></td>
+                            <td><?php echo $user['lastname'] ?></td>
+                            <td><?php echo $user['email'] ?></td>
+                            <td><?php echo $user['username']?></td>
+                            <td><?php echo $user['role'] ?></td>
+                            <td>
+                                <a href="users_detail.php?id=<?php echo $user['id'] ?>">Bekijk</a>
+                                <?php echo "<a href='users_edit.php?id=" . $user['id'] . "'>Wijzig</a>";?>
+                                <?php echo "<a href='users_delete.php?id=" . $user['id'] . "'>Verwijder</a>";?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
